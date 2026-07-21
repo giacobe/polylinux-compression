@@ -3,9 +3,11 @@ set -eu
 . "$INSTALL_ROOT/resources.sh"
 
 answer_hex=$(derive_hex answer)
-host_octet=$((1 + $(hex_byte "$answer_hex" 0) % 254))
+answer_byte0=$(hex_byte "$answer_hex" 0)
+answer_byte1=$(hex_byte "$answer_hex" 1)
+host_octet=$((1 + answer_byte0 % 254))
 target_ip="192.168.1.$host_octet"
-answer=$((7 + $(hex_byte "$answer_hex" 1) % 18))
+answer=$((7 + answer_byte1 % 18))
 layout_hex=$(derive_hex layout)
 work=$(fresh_workdir)
 mkdir -p "$work/backup/logs"
@@ -43,4 +45,3 @@ write_readme "web-logs.tar.gz is a compressed web-server backup. Extract it and 
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-

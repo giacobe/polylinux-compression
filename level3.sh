@@ -4,7 +4,8 @@ set -eu
 
 answer="flag-$(answer_token 14)"
 layout_hex=$(derive_hex layout)
-target=$((4 + $(hex_byte "$layout_hex" 0) % 12))
+layout_byte0=$(hex_byte "$layout_hex" 0)
+target=$((4 + layout_byte0 % 12))
 work=$(fresh_workdir)
 
 i=1
@@ -22,4 +23,3 @@ write_readme "The file payload.bin has no useful extension. Identify its type wi
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-

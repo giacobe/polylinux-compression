@@ -7,8 +7,10 @@ phrase_index=$(hex_byte "$answer_hex" 0)
 phrase_index=$((phrase_index % 16))
 answer=$(sed -n "$((phrase_index + 1))p" "$INSTALL_ROOT/phrases.txt")
 layout_hex=$(derive_hex layout)
-document=$((1 + $(hex_byte "$layout_hex" 0) % 8))
-project=$((300 + $(hex_byte "$layout_hex" 1) * 7 + document) % 700))
+layout_byte0=$(hex_byte "$layout_hex" 0)
+layout_byte1=$(hex_byte "$layout_hex" 1)
+document=$((1 + layout_byte0 % 8))
+project=$((300 + (layout_byte1 * 7 + document) % 700))
 work=$(fresh_workdir)
 mkdir -p "$work/bundle/documents"
 
@@ -38,4 +40,3 @@ write_readme "Inspect and extract project-records.zip. Follow CATALOG.txt and su
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-

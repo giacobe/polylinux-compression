@@ -3,11 +3,17 @@ set -eu
 . "$INSTALL_ROOT/resources.sh"
 
 answer_hex=$(derive_hex answer)
-list_index=$(($(hex_byte "$answer_hex" 0) % 16))
-word_index=$(($(hex_byte "$answer_hex" 1) % 16))
+answer_byte0=$(hex_byte "$answer_hex" 0)
+answer_byte1=$(hex_byte "$answer_hex" 1)
+list_index=$((answer_byte0 % 16))
+word_index=$((answer_byte1 % 16))
 answer=$(sed -n "$((list_index + 1))p" "$INSTALL_ROOT/wordgrid.txt" | awk -v n="$((word_index + 1))" '{print $n}')
 layout_hex=$(derive_hex layout)
-release="release-$((2 + $(hex_byte "$layout_hex" 0) % 8)).$((1 + $(hex_byte "$layout_hex" 1) % 9))"
+layout_byte0=$(hex_byte "$layout_hex" 0)
+layout_byte1=$(hex_byte "$layout_hex" 1)
+release_major=$((2 + layout_byte0 % 8))
+release_minor=$((1 + layout_byte1 % 9))
+release="release-$release_major.$release_minor"
 work=$(fresh_workdir)
 mkdir -p "$work/$release/config" "$work/$release/data/lists" "$work/$release/src"
 

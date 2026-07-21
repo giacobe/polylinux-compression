@@ -5,10 +5,13 @@ set -eu
 answer="mail-$(answer_token 13)"
 answer_hex=$(derive_hex answer)
 senders="alex blair casey devon ellis frankie gray harper"
-sender_name=$(pick_from_words "$senders" "$(hex_byte "$answer_hex" 20)")
+answer_byte20=$(hex_byte "$answer_hex" 20)
+answer_byte21=$(hex_byte "$answer_hex" 21)
+answer_byte22=$(hex_byte "$answer_hex" 22)
+sender_name=$(pick_from_words "$senders" "$answer_byte20")
 sender="$sender_name@example.net"
-day=$((10 + $(hex_byte "$answer_hex" 21) % 15))
-target=$((1 + $(hex_byte "$answer_hex" 22) % 12))
+day=$((10 + answer_byte21 % 15))
+target=$((1 + answer_byte22 % 12))
 work=$(fresh_workdir)
 mkdir -p "$work/mail/Maildir/cur" "$work/mail/Maildir/new"
 
@@ -41,4 +44,3 @@ write_readme "Extract mail-backup.tar.bz2. Find the message from $sender dated $
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-

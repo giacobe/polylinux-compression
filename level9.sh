@@ -3,9 +3,12 @@ set -eu
 . "$INSTALL_ROOT/resources.sh"
 
 answer_hex=$(derive_hex answer)
-answer=$((10000 + ($(hex_byte "$answer_hex" 0) * 256 + $(hex_byte "$answer_hex" 1)) % 90000))
+answer_byte0=$(hex_byte "$answer_hex" 0)
+answer_byte1=$(hex_byte "$answer_hex" 1)
+answer=$((10000 + (answer_byte0 * 256 + answer_byte1) % 90000))
 layout_hex=$(derive_hex layout)
-target=$((1 + $(hex_byte "$layout_hex" 0) % 12))
+layout_byte0=$(hex_byte "$layout_hex" 0)
+target=$((1 + layout_byte0 % 12))
 stamp=$(deterministic_timestamp)
 display_day=$(printf '%s' "$stamp" | cut -c 7-8)
 display_hour=$(printf '%s' "$stamp" | cut -c 9-10)
@@ -35,4 +38,3 @@ write_readme "Use a verbose tar listing to inspect projects.tar.gz. The authorit
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-

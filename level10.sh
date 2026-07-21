@@ -4,9 +4,13 @@ set -eu
 
 answer="flag-$(answer_token 16)"
 answer_hex=$(derive_hex answer)
-host_octet=$((1 + $(hex_byte "$answer_hex" 20) % 254))
-request_id=$((100000 + ($(hex_byte "$answer_hex" 21) * 256 + $(hex_byte "$answer_hex" 22)) % 900000))
-rotation=$((1 + $(hex_byte "$answer_hex" 23) % 4))
+answer_byte20=$(hex_byte "$answer_hex" 20)
+answer_byte21=$(hex_byte "$answer_hex" 21)
+answer_byte22=$(hex_byte "$answer_hex" 22)
+answer_byte23=$(hex_byte "$answer_hex" 23)
+host_octet=$((1 + answer_byte20 % 254))
+request_id=$((100000 + (answer_byte21 * 256 + answer_byte22) % 900000))
+rotation=$((1 + answer_byte23 % 4))
 target_ip="10.44.7.$host_octet"
 work=$(fresh_workdir)
 mkdir -p "$work/incident/logs" "$work/incident/notes"
@@ -35,4 +39,3 @@ write_readme "Unpack incident-bundle.zip and follow MANIFEST.txt. One rotated lo
 record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
-
