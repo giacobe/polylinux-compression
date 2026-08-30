@@ -20,6 +20,5 @@ done
 xz -c "$work/release-notes.txt" > "$LEVEL_HOME/payload.bin"
 
 write_readme "The file payload.bin has no useful extension. Identify its type with file, decompress it with the appropriate compression tool, and report the release-token."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

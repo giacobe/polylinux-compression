@@ -37,6 +37,5 @@ done
 (cd "$work/bundle" && zip -qr "$LEVEL_HOME/project-records.zip" CATALOG.txt documents)
 
 write_readme "Inspect and extract project-records.zip. Follow CATALOG.txt and submit the authoritative project's approval phrase, including its space."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

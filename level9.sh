@@ -35,6 +35,5 @@ done
 (cd "$work/backup" && tar -cf - projects | gzip -c > "$LEVEL_HOME/projects.tar.gz")
 
 write_readme "Use a verbose tar listing to inspect projects.tar.gz. The authoritative member is executable and has timestamp Jun $display_day at $display_hour:$display_minute. Extract that member and submit its numerical project_id."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

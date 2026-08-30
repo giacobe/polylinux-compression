@@ -25,6 +25,5 @@ done
 (cd "$work/archive" && tar -cf "$LEVEL_HOME/records.tar" INDEX.txt reports)
 
 write_readme "records.tar is an uncompressed archive. List or extract it, follow INDEX.txt, and submit the selected word."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

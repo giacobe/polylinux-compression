@@ -13,7 +13,6 @@ backups, archive metadata, and a two-layer incident bundle.
 Copy this repository into the Buildroot image's `/root` directory and run:
 
 ```sh
-chmod +x install.sh level*.sh nextlevel prevlevel checklevel verify.sh
 ./install.sh
 ```
 
@@ -42,8 +41,6 @@ answer, layout, noise, and filename parameters.
 
 ## Grading
 
-Expected answers are installed root-only under
-`/var/lib/compression-bandit/answers/`. External graders can read these files.
 Run `./verify.sh` as root after installation to exercise the reference solvers.
 
 See `LEVELS.md` for the curriculum and `TOOLSET.md` for dependencies.
@@ -70,3 +67,9 @@ scripts/03-package-payload.sh \
 Replace `<timestamp>` with the stage-2 artifact directory. Review the manifest,
 verify every compression command in `TOOLSET.md`, and boot-test the exact
 generated image pair in v86 before publishing.
+
+## Standard runtime contract
+
+The current release uses the reversible PolyBandit exercise code, the versioned `seed-v1` deterministic seed, ten concurrent level generators, staged `README.txt` readiness, unrestricted `nextlevel`/`prevlevel` navigation, and no client-side answer store or checker. See `lab.json` for the authoritative level count, theme policy, Buildroot configuration, and browser artifact names.
+
+Do not rebuild the assigned Buildroot baseline merely to package this lab. Package the repository payload into the configuration named by `buildroot_configuration`, preserve the baseline kernel, and publish the resulting `packaged.bzImage` and `packaged.rootfs.cpio.gz`.

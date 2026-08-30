@@ -3,13 +3,15 @@ set -eu
 
 cd "$(dirname "$0")"
 INSTALL_ROOT=$(pwd)
-export INSTALL_ROOT
-. "$INSTALL_ROOT/resources.sh"
-
+LAB_ID='compression-bandit'
+LAB_TITLE='Compression Bandit'
 SYSTEM_PASSWORD=${SYSTEM_PASSWORD:-systemPassword}
 LEVEL_PASSWORD_ROOT=${LEVEL_PASSWORD_ROOT:-levelPassword}
 currentDate=${CURRENT_DATE:-$(date +%Y-%m-%d)}
-export SYSTEM_PASSWORD LEVEL_PASSWORD_ROOT currentDate
+export INSTALL_ROOT LAB_ID LAB_TITLE SYSTEM_PASSWORD LEVEL_PASSWORD_ROOT currentDate
+
+. "$INSTALL_ROOT/resources.sh"
+. "$INSTALL_ROOT/polylinux-common.sh"
 
 NON_INTERACTIVE=0
 NO_LOGIN=0
@@ -22,61 +24,39 @@ for arg in "$@"; do
 done
 
 if [ "$NON_INTERACTIVE" -eq 1 ]; then
-    USER_ID=${USER_ID:-student@example.edu}
+    raw_user=${USER_ID:-student@example.edu}
 else
     confirmation=n
     while [ "$confirmation" != y ]; do
-        printf 'Enter your email address (e.g. xyz1234@psu.edu): '
-        IFS= read -r USER_ID
-        printf 'Is %s your email address? (y/n) ' "$USER_ID"
+        printf 'Enter your email address: '
+        IFS= read -r raw_user
+        normalized=$(normalize_email "$raw_user")
+        validate_email "$normalized" || { echo 'That address is not valid.' >&2; continue; }
+        printf 'The exercise will use %s. Is that correct? (y/n) ' "$normalized"
         IFS= read -r confirmation
     done
 fi
-export USER_ID
+USER_ID=$(normalize_email "$raw_user")
+validate_email "$USER_ID" || die 'invalid email address after normalization'
+validate_iso_date "$currentDate" || die 'CURRENT_DATE must be YYYY-MM-DD'
+EXERCISE_CODE=$(exercise_code_from_date "$currentDate")
+export USER_ID EXERCISE_CODE
+select_theme
+THEME_OFFSET=$THEME_INDEX
+THEME_STEP=0
+export THEME_OFFSET THEME_STEP
 
-for cmd in awk base64 bzip2 cut file gzip sha256sum tar tr xxd xz zip unzip; do
-    command_required "$cmd"
-done
+for cmd in 7za adduser awk base64 bzip2 cat chmod chown cp cut date file find gzip id mkdir mv passwd printf rm sed sha256sum sleep sort su tar touch tr unzip wc xxd xz zip; do command_required "$cmd"; done
 
 mkdir -p /home
-ANSWER_DIR=/var/lib/compression-bandit/answers
-mkdir -p "$ANSWER_DIR"
-chmod 700 /var/lib/compression-bandit "$ANSWER_DIR"
-export ANSWER_DIR
 
 cp "$INSTALL_ROOT/profile" /etc/profile
-for command_file in nextlevel prevlevel checklevel; do
-    cp "$INSTALL_ROOT/$command_file" "/usr/bin/$command_file"
-    chmod 755 "/usr/bin/$command_file"
+for helper in nextlevel prevlevel; do
+    cp "$INSTALL_ROOT/$helper" "/usr/bin/$helper"
+    chmod 755 "/usr/bin/$helper"
 done
 
-echo "Building 10 Compression Bandit levels"
-levelnumber=1
-while [ "$levelnumber" -le 10 ]; do
-    levelToBuild="level$levelnumber"
-    LEVEL_HOME="/home/$levelToBuild"
-    levelPassword="${LEVEL_PASSWORD_ROOT}${levelnumber}"
-    level_HASH=$(printf '%s%s%s%s' "$USER_ID" "$currentDate" \
-        "$SYSTEM_PASSWORD" "$levelPassword" | sha256sum | awk '{print $1}')
-    export levelnumber levelToBuild LEVEL_HOME levelPassword level_HASH
-
-    if ! id "$levelToBuild" >/dev/null 2>&1; then
-        adduser -D -g "Compression Bandit user" "$levelToBuild"
-    fi
-    passwd -d "$levelToBuild" >/dev/null 2>&1 || true
-    case "$LEVEL_HOME" in
-        /home/level[1-9]|/home/level10) rm -rf "$LEVEL_HOME" ;;
-        *) die "refusing to reset unexpected home: $LEVEL_HOME" ;;
-    esac
-    mkdir -p "$LEVEL_HOME"
-    chmod 700 "$LEVEL_HOME"
-
-    echo "  $levelToBuild"
-    sh "$INSTALL_ROOT/$levelToBuild.sh"
-    levelnumber=$((levelnumber + 1))
-done
-
-echo "Build complete. Run ./verify.sh to validate generated levels."
-if [ "$NO_LOGIN" -eq 0 ]; then
-    exec su -l level1
-fi
+. "$INSTALL_ROOT/polylinux-parallel-runtime.sh"
+prepare_standard_accounts
+echo "Exercise code: $EXERCISE_CODE"
+start_standard_levels

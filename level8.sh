@@ -32,6 +32,5 @@ echo "int main(void) { return 0; }" > "$work/$release/src/main.c"
 (cd "$work" && tar -cf - "$release" | xz -c > "$LEVEL_HOME/$release.tar.xz")
 
 write_readme "Extract the tar.xz source release. Read config/release.conf, then submit the selected entry from data/lists. Both list and entry numbering start at zero."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

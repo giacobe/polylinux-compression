@@ -36,6 +36,5 @@ rm "$work/incident/logs/gateway.log.$rotation"
 (cd "$work/incident" && zip -qr "$LEVEL_HOME/incident-bundle.zip" MANIFEST.txt logs notes)
 
 write_readme "Unpack incident-bundle.zip and follow MANIFEST.txt. One rotated log is itself gzip-compressed. Submit the token associated with both the target IP and request ID."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

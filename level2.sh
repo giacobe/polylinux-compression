@@ -27,6 +27,5 @@ done
 bzip2 -c "$work/dispatch.tsv" > "$LEVEL_HOME/dispatch.tsv.bz2"
 
 write_readme "A bzip2-compressed dispatch table is in this directory. The answer is the ticket number owned by compression-desk."
-record_answer "$ticket"
 cleanup_workdir "$work"
 finish_level

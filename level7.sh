@@ -41,6 +41,5 @@ done
 (cd "$work/mail" && tar -cf - Maildir | bzip2 -c > "$LEVEL_HOME/mail-backup.tar.bz2")
 
 write_readme "Extract mail-backup.tar.bz2. Find the message from $sender dated $(printf '%02d' "$day") Jun 2024 and submit its Recovery token."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

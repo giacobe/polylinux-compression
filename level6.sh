@@ -42,6 +42,5 @@ done
 (cd "$work/backup" && tar -cf - logs | gzip -c > "$LEVEL_HOME/web-logs.tar.gz")
 
 write_readme "web-logs.tar.gz is a compressed web-server backup. Extract it and count all requests from $target_ip across every rotated access log. The decimal count is the answer."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level

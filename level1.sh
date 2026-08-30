@@ -16,7 +16,6 @@ work=$(fresh_workdir)
 gzip -c < "$work/$name.txt" > "$LEVEL_HOME/$name.txt.gz"
 
 write_readme "The flag is in the gzip-compressed file in this directory. Decompress the file and read its contents."
-record_answer "$answer"
 cleanup_workdir "$work"
 finish_level
 

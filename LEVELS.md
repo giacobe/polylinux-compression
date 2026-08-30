@@ -32,9 +32,7 @@ of the same seed.
 After installation, read the exact expected answer from:
 
 ```text
-/var/lib/compression-bandit/answers/$LEVEL_USER
 ```
 
-For example, level 6 is `/var/lib/compression-bandit/answers/level6`. Every
 file contains one answer followed by a newline.
 
