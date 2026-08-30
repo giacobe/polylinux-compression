@@ -59,7 +59,7 @@ deterministic_timestamp() {
 write_readme() {
     instructions=$1
     {
-        echo "* Create date: $currentDate"
+        echo "* Exercise code: $EXERCISE_CODE"
         echo "* User       : $USER_ID"
         echo "************************************************************************"
         echo "* Instructions for this level"
@@ -86,4 +86,3 @@ cleanup_workdir() {
         *) die "refusing to remove unexpected work directory: $1" ;;
     esac
 }
-
