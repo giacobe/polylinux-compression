@@ -59,11 +59,7 @@ deterministic_timestamp() {
 write_readme() {
     instructions=$1
     {
-        echo "* Exercise code: $EXERCISE_CODE"
-        echo "* User       : $USER_ID"
-        echo "************************************************************************"
-        echo "* Instructions for this level"
-        echo "************************************************************************"
+        echo "Instructions for this level"
         printf '%s\n' "$instructions"
     } > "$LEVEL_HOME/README.txt"
 }
@@ -74,7 +70,7 @@ finish_level() {
 }
 
 fresh_workdir() {
-    work="/tmp/compression-bandit-$levelToBuild"
+    work="/tmp/polylinux-compression-$levelToBuild"
     rm -rf "$work"
     mkdir -p "$work"
     printf '%s\n' "$work"
@@ -82,7 +78,7 @@ fresh_workdir() {
 
 cleanup_workdir() {
     case "$1" in
-        /tmp/compression-bandit-level*) rm -rf "$1" ;;
+        /tmp/polylinux-compression-level*) rm -rf "$1" ;;
         *) die "refusing to remove unexpected work directory: $1" ;;
     esac
 }

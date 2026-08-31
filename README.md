@@ -1,6 +1,6 @@
-# Compression Bandit
+# PolyLinux Compression
 
-Compression Bandit is a ten-level command-line exercise derived from the
+PolyLinux Compression is a ten-level command-line exercise derived from the
 compression lesson in OverTheWire Bandit. It uses the same flat,
 installer-oriented style as PolyBandit3.1, but all level data is generated
 deterministically from one SHA-256 seed per learner and level.

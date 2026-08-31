@@ -2,9 +2,11 @@
 PS1='\W$ '
 cd "$HOME" || exit 1
 clear
-echo "************************************************************************"
-echo "* Welcome to Compression Bandit. Read README.txt to begin.             *"
-echo "* Submit answers to the exercise grader.                               *"
-echo "* Move with nextlevel and prevlevel.                                   *"
-echo "************************************************************************"
+box_line() { printf '* %-36.36s *\n' "$1"; }
+echo '****************************************'
+box_line 'PolyLinux: Compression'
+box_line 'Read README.txt to begin.'
+box_line 'Use the exercise grading form.'
+box_line 'Use nextlevel and prevlevel.'
+echo '****************************************'
 cat README.txt

@@ -3,8 +3,8 @@ set -eu
 
 cd "$(dirname "$0")"
 INSTALL_ROOT=$(pwd)
-LAB_ID='compression-bandit'
-LAB_TITLE='Compression Bandit'
+LAB_ID='polylinux-compression'
+LAB_TITLE='PolyLinux Compression'
 SYSTEM_PASSWORD=${SYSTEM_PASSWORD:-systemPassword}
 LEVEL_PASSWORD_ROOT=${LEVEL_PASSWORD_ROOT:-levelPassword}
 currentDate=${CURRENT_DATE:-$(date +%Y-%m-%d)}

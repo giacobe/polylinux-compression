@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "lab_id": "compression-bandit",
+  "lab_id": "polylinux-compression",
   "lab_number": 14,
-  "title": "Compression Bandit",
+  "title": "PolyLinux Compression",
   "status": "published",
   "lab_version": "1.0.0",
   "seed_contract_version": "seed-v1",

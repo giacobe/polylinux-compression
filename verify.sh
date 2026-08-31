@@ -12,7 +12,7 @@ done
 for forbidden in \
     "$root/answers" \
     "$root/root/answers" \
-    "$root/var/lib/compression-bandit/answers"; do
+    "$root/var/lib/polylinux-compression/answers"; do
     if [ -e "$forbidden" ]; then
         echo "forbidden client-side answer store: $forbidden" >&2
         failed=1

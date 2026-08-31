@@ -3,7 +3,7 @@ set -eu
 cd "$(dirname "$0")"
 . ./polylinux-common.sh
 
-LAB_ID=${LAB_ID:-compression-bandit}
+LAB_ID=${LAB_ID:-polylinux-compression}
 USER_ID=$(normalize_email '  Student@Example.EDU  ')
 currentDate=2026-08-30
 SYSTEM_PASSWORD='systemPassword'

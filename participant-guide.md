@@ -6,9 +6,9 @@ form_url: "https://forms.microsoft.com/Pages/ResponsePage.aspx?id=RY30fNs9iUOpwc
 
 ---
 
-# Compression Bandit: Participant Guide
+# PolyLinux Compression: Participant Guide
 
-Welcome to Compression Bandit, a ten-level Linux command-line exercise about
+Welcome to PolyLinux Compression, a ten-level Linux command-line exercise about
 compressed files and archives. Each level gives you one artifact to inspect.
 Your task is to recover one answer from that artifact.
 
