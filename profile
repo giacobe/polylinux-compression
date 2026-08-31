@@ -7,6 +7,4 @@ echo "* Welcome to Compression Bandit. Read README.txt to begin.             *"
 echo "* Submit answers to the exercise grader.                               *"
 echo "* Move with nextlevel and prevlevel.                                   *"
 echo "************************************************************************"
-echo "* Level: $USER"
 cat README.txt
-
